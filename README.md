@@ -26,27 +26,41 @@ npm install babel-plugin-import-postcss --save-dev
 Add [babel-plugin-import-postcss] to your Babel configuration:
 
 ```js
-const postcssPresetEnv = require('postcss-preset-env');
+// babel.config.js
+module.exports = {
+  plugins: [
+    'import-postcss'
+  ]
+}
+```
 
-const targets = '> 0.5%, last 2 versions, Firefox ESR, not dead';
+It uses your existing PostCSS configuration:
+
+```js
+// postcss.config.js
+var postcssPresetEnv = require('postcss-preset-env');
+
+module.exports = {
+  plugins: [
+    postcssPresetEnv({ stage: 0 })
+  ],
+  map: { inline: true }
+};
+```
+
+Alternatively, configure PostCSS directly within your Babel configuration:
+
+```js
+// babel.config.js
+var postcssPresetEnv = require('postcss-preset-env');
 
 module.exports = {
   plugins: [
     ['import-postcss', {
       plugins: [
-        /* add whichever plugins you like */
-        postcssPresetEnv({
-          browsers: targets
-          stage: 0
-        })
+        postcssPresetEnv({ stage: 0 })
       ],
-      severity: 'ignore'
-    }],
-    ['@babel/env', {
-      loose: true,
-      modules: false,
-      targets: targets,
-      useBuiltIns: 'entry'
+      map: { inline: true }
     }]
   ]
 }
@@ -59,6 +73,7 @@ module.exports = {
 The `plugins` option determines the PostCSS plugins used to process CSS.
 
 ```js
+// babel.config.js
 var postcssImport = require('postcss-import');
 var postcssPresetEnv = require('postcss-preset-env');
 
@@ -96,6 +111,7 @@ The `extensions` option determines which file extensions will be transformed
 by PostCSS. By default, any extension ending in `css` will be transformed.
 
 ```js
+// babel.config.js
 module.exports = {
   plugins: [
     ['import-postcss', {
@@ -113,6 +129,7 @@ errors are thrown. It is also possible to log errors as a `warning`, or to
 `ignore` all warnings.
 
 ```js
+// babel.config.js
 module.exports = {
   plugins: [
     ['import-postcss', {
@@ -129,6 +146,7 @@ options include `map` for source map options and `syntax` for transforming
 Sass, Less, Stylus, etc.
 
 ```js
+// babel.config.js
 module.exports = {
   plugins: [
     ['import-postcss', {

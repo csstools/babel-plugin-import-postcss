@@ -1,17 +1,21 @@
+import cosmicconfig from 'cosmiconfig';
 import deasync from 'deasync';
 import fs from 'fs';
 import path from 'path';
 import postcss from 'postcss';
 
-export default function babelPluginImportPostCSS(api, opts) {
+export default function babelPluginImportPostCSS(api, rawopts) {
+	// options from postcss configuration files overridden by local options
+	const opts = loadOptions(rawopts);
+
 	// determine the PostCSS plugins used to process CSS
-	const plugins = [].concat(Object(opts).plugins || []).map(mapSugaryPostCSSPlugins);
+	const plugins = [].concat(opts.plugins || []).map(mapSugaryPostCSSPlugins);
 
 	// determine how errors should be handled
-	const severity = 'severity' in Object(opts) ? String(opts.severity).toLowerCase() : 'throw';
+	const severity = 'severity' in opts ? String(opts.severity).toLowerCase() : 'throw';
 
 	// determine which file extensions should be transformed
-	const extensions = [].concat('extensions' in Object(opts) ? opts.extensions : /\.[^.]*css/);
+	const extensions = [].concat('extensions' in opts ? opts.extensions : /\.[^.]*css/);
 
 	// additional options as passed into PostCSS as process options
 	const initialProcessOpts = getInitialProcessOptsFromOpts(opts);
@@ -44,6 +48,19 @@ export default function babelPluginImportPostCSS(api, opts) {
 			}
 		}
 	};
+}
+
+// load options from a postcss configuration file overridden by local options
+function loadOptions(opts) {
+	let awaitedResult;
+
+	cosmicconfig('postcss').search().then(result => {
+		awaitedResult = Object.assign(Object(result).config, opts);
+	})
+
+	deasync.loopWhile(() => awaitedResult === undefined);
+
+	return awaitedResult;
 }
 
 // transform an sugary array of postcss plugins into a normal postcss plugin array
