@@ -1,0 +1,55 @@
+{
+  "name": "babel-plugin-import-postcss",
+  "version": "1.0.0",
+  "description": "Import processed CSS files in JS",
+  "author": "Jonathan Neal <jonathantneal@hotmail.com>",
+  "license": "CC0-1.0",
+  "repository": "csstools/babel-plugin-import-postcss",
+  "homepage": "https://github.com/csstools/babel-plugin-import-postcss#readme",
+  "bugs": "https://github.com/csstools/babel-plugin-import-postcss/issues",
+  "main": "index.js",
+  "module": "index.mjs",
+  "files": [
+    "index.js",
+    "index.js.map",
+    "index.mjs",
+    "index.mjs.map"
+  ],
+  "scripts": {
+    "build": "rollup --config --silent",
+    "prepublishOnly": "npm test && npm run build",
+    "test": "npm run test:js",
+    "test:js": "eslint src/*.js --cache --ignore-path .gitignore --quiet"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "dependencies": {
+    "deasync": "^0.1.14",
+    "postcss": "^7.0.14"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.12.1",
+    "eslint-config-dev": "^2.0.0",
+    "postcss-tape": "^4.0.0",
+    "pre-commit": "^1.2.2",
+    "rollup": "^1.1.2",
+    "rollup-plugin-babel": "^4.3.2"
+  },
+  "eslintConfig": {
+    "extends": "dev",
+    "parser": "babel-eslint"
+  },
+  "keywords": [
+    "javascript",
+    "node",
+    "postcss",
+    "css",
+    "import",
+    "process",
+    "plugins"
+  ]
+}
