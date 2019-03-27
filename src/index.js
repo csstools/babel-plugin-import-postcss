@@ -55,8 +55,8 @@ function loadOptions(opts) {
 	let awaitedResult;
 
 	cosmicconfig('postcss').search().then(result => {
-		awaitedResult = Object.assign(Object(result).config, opts);
-	})
+		awaitedResult = Object.assign(Object(Object(result).config), opts);
+	});
 
 	deasync.loopWhile(() => awaitedResult === undefined);
 
