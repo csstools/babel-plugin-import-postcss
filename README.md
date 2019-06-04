@@ -158,7 +158,7 @@ module.exports = {
 }
 ```
 
-[cli-img]: https://img.shields.io/travis/csstools/babel-plugin-import-postcss.svg
+[cli-img]: https://img.shields.io/travis/csstools/babel-plugin-import-postcss/master.svg
 [cli-url]: https://travis-ci.org/csstools/babel-plugin-import-postcss
 [git-img]: https://img.shields.io/badge/support-chat-blue.svg
 [git-url]: https://gitter.im/postcss/postcss
